@@ -3,6 +3,7 @@ package myLibrary;
 import java.time.LocalDate;
 
 public class Book {
+    int id, quantity;
     String bookName, bookAuthor, issuedTo;
     LocalDate issueOn;
 
@@ -12,6 +13,16 @@ public class Book {
         this.issuedTo = issuedTo;
         this.issueOn = issueOn;
     }
+
+    public Book(int id, int quantity, String bookName, String bookAuthor, String issuedTo, LocalDate issueOn) {
+        this.id = id;
+        this.quantity = quantity;
+        this.bookName = bookName;
+        this.bookAuthor = bookAuthor;
+        this.issuedTo = issuedTo;
+        this.issueOn = issueOn;
+    }
+
     public String getBookName() {
         return bookName;
     }
@@ -35,5 +46,11 @@ public class Book {
     }
     public void setIssueOn(LocalDate issueOn) {
         this.issueOn = issueOn;
+    }
+    void getBookDetails(){
+
+    }
+    void updateQuantity(int newQuantity){
+        quantity = newQuantity;
     }
 }
