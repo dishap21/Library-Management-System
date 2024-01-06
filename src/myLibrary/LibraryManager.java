@@ -3,7 +3,7 @@ package myLibrary;
 import java.util.Arrays;
 import java.util.List;
 
-public class LibraryManage {
+public class LibraryManager {
     public static void main(String[] args) {
         List<Book> fullList = Arrays.asList(
                 new Book("Pride and Prejudice", "Jane Austen", null, null),
@@ -25,7 +25,5 @@ public class LibraryManage {
                 new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", null, null),
                 new Book("Eloquent JavaScript", "Marijn Haverbeke", null, null)
         );
-
-        Library lib1 = new Library();
     }
 }
