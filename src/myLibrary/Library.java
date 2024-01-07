@@ -23,12 +23,21 @@ public class Library {
         Members.remove(member);
     }
     void displayAvailableBooks(){
-
-    }
-    void displayIssuedBooks(){
-
+        for(Book book: Books){
+            System.out.println(book);
+        }
     }
     void displayMembers(){
-
+        for(Member member: Members){
+            System.out.println(member);
+        }
+    }
+    public void issueBook(Member member, Book book) {
+        if (Books.contains(book) && book.getQuantity() > 0) {
+            book.updateQuantity(book.getQuantity() - 1);
+            member.issueBook(book);
+        } else {
+            System.out.println("Sorry, the book is not available for borrowing.");
+        }
     }
 }
