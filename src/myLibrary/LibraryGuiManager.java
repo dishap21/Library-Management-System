@@ -15,4 +15,8 @@ public class LibraryGuiManager {
     public void runGui() {
         // Implement GUI-based interactions
     }
+
+    public void issueBook(Member member, Book book) {
+        library.issueBook(member, book);
+    }
 }

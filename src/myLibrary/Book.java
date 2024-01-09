@@ -3,19 +3,12 @@ package myLibrary;
 import java.time.LocalDate;
 
 public class Book {
-    int bookId, quantity;
+    int bookId=0, quantity;
     String bookName, bookAuthor, issuedTo;
     LocalDate issueOn;
 
-    public Book(String bookName, String bookAuthor, String issuedTo, LocalDate issueOn) {
-        this.bookName = bookName;
-        this.bookAuthor = bookAuthor;
-        this.issuedTo = issuedTo;
-        this.issueOn = issueOn;
-    }
-
-    public Book(int bookId, int quantity, String bookName, String bookAuthor, String issuedTo, LocalDate issueOn) {
-        this.bookId = bookId;
+    public Book(int quantity, String bookName, String bookAuthor, String issuedTo, LocalDate issueOn) {
+        this.bookId += bookId;
         this.quantity = quantity;
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
@@ -59,8 +52,15 @@ public class Book {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    void getBookDetails(){
-
+    public void getBookDetails(int Id) {
+        if (this.bookId == Id) {
+            System.out.println("Book ID: " + bookId);
+            System.out.println("Title: " + bookName);
+            System.out.println("Author: " + bookAuthor);
+            System.out.println("Quantity: " + quantity);
+        } else {
+            System.out.println("Book with ID " + bookId + " not found.");
+        }
     }
     void updateQuantity(int newQuantity){
         quantity = newQuantity;
