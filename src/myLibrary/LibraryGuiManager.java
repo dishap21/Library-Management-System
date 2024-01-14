@@ -1,100 +1,212 @@
 package myLibrary;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 public class LibraryGuiManager {
     private Library library;
-    private JPanel currentScreen;
-    private JFrame frame;
-
+    private static CardLayout cardLayout;
+    private static JPanel cardPanel;
     public LibraryGuiManager(Library library) {
         this.library = library;
         initializeGui();
     }
 
     private void initializeGui() {
-        // Create a JFrame
-        frame = new JFrame("Library Management System");
-        frame.setSize(700, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Library Management System");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Initial Screen
-        currentScreen = createScreen("Home", "Welcome Dear Member.");
-        frame.getContentPane().add(currentScreen);
-        frame.setVisible(true);
+            // Create buttons
+            JButton button1 = new JButton("Home");
+            JButton button2 = new JButton("Book details");
+            JButton button3 = new JButton("Issue Book");
+            JButton button4 = new JButton("Return Book");
+            JButton button5 = new JButton("Admin Section");
+
+            // Add action listeners to the buttons
+            button1.addActionListener(new ButtonClickListener("Panel 1"));
+            button2.addActionListener(new ButtonClickListener("Panel 2"));
+            button3.addActionListener(new ButtonClickListener("Panel 3"));
+            button4.addActionListener(new ButtonClickListener("Panel 4"));
+            button5.addActionListener(new ButtonClickListener("Panel 5"));
+
+            // Add custom UI to set the background color of the selected button
+            button1.setUI(new SelectedButtonUI(Color.cyan));
+            button2.setUI(new SelectedButtonUI(Color.cyan));
+            button3.setUI(new SelectedButtonUI(Color.cyan));
+            button4.setUI(new SelectedButtonUI(Color.cyan));
+            button5.setUI(new SelectedButtonUI(Color.cyan));
+
+            // Create a panel for buttons
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(button1);
+            buttonPanel.add(button2);
+            buttonPanel.add(button3);
+            buttonPanel.add(button4);
+            buttonPanel.add(button5);
+
+            // Create card layout and panel
+            cardLayout = new CardLayout();
+            cardPanel = new JPanel(cardLayout);
+
+            // Create panels for each "page"
+            JPanel panel1 = createPanel1();
+            JPanel panel2 = createPanel2();
+            JPanel panel3 = createPanel3();
+            JPanel panel4 = createPanel4();
+            JPanel panel5 = createPanel5();
+
+            // Add panels to the card panel
+            cardPanel.add(panel1, "Panel 1");
+            cardPanel.add(panel2, "Panel 2");
+            cardPanel.add(panel3, "Panel 3");
+            cardPanel.add(panel4, "Panel 4");
+            cardPanel.add(panel5, "Panel 5");
+
+            // Set up the main frame
+            frame.setLayout(new BorderLayout());
+            frame.add(buttonPanel, BorderLayout.SOUTH);
+            frame.add(cardPanel, BorderLayout.CENTER);
+
+            // Set main frame properties
+            frame.setSize(700, 400);
+            frame.setVisible(true);
+        });
     }
+    static class ButtonClickListener implements ActionListener {
+        private String panelName;
 
-    private JPanel createScreen(String title, String message) {
-        JPanel screen = new JPanel(new BorderLayout());
+        public ButtonClickListener(String panelName) {
+            this.panelName = panelName;
+        }
 
-        JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Switch to the specified panel when a button is clicked
+            cardLayout.show(cardPanel, panelName);
+        }
+    }
+    // Helper method to create a panel with some content
+    private static JPanel createPanel1() {
+        JPanel panel = new JPanel(new BorderLayout());
+        // Title
+        JLabel titleLabel = new JLabel("Home");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        screen.add(titleLabel, BorderLayout.NORTH);
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
 
-        JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
-        screen.add(messageLabel, BorderLayout.CENTER);
+        // content
+        JLabel contentLabel = new JLabel("Welcome dear member");
+        contentLabel.setSize(12, 8);
+        contentLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(contentLabel, BorderLayout.CENTER);
 
-//        JLabel idLabel = new JLabel(message, SwingConstants.CENTER);
-//        screen.add(idLabel, BorderLayout.CENTER);
+        return panel;
+    }
+    private static JPanel createPanel2() {
+        JPanel panel = new JPanel(new BorderLayout());
+        // Title
+        JLabel titleLabel = new JLabel("Book Details");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
+        return panel;
+    }
+    private static JPanel createPanel3() {
+        JPanel panel = new JPanel(new BorderLayout());
+        // Title
+        JLabel titleLabel = new JLabel("Issue Book");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
+        return panel;
+    }
+    private static JPanel createPanel4() {
+        JPanel panel = new JPanel(new BorderLayout());
+        // Title
+        JLabel titleLabel = new JLabel("Return Book");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
+        return panel;
+    }
+    private static JPanel createPanel5() {
+        JPanel panel = new JPanel(new BorderLayout());
+        // Title
+        JLabel titleLabel = new JLabel("Admin Section");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
+        panel.add(new Label("Welcome, Admin."));
+        JPanel contentPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panel.add(contentPanel2, BorderLayout.CENTER);
+        // Content
+        JPanel contentPanel = new JPanel(new FlowLayout());
 
-        JButton issueButton = new JButton("Issue Book");
-        JButton bookDetailsButton = new JButton("Get Book Details");
-        JButton returnButton = new JButton("Return Book");
-        issueButton.setBorder(new EmptyBorder(10, 20, 10, 20));
-        bookDetailsButton.setBorder(new EmptyBorder(10, 20, 10, 20));
-        returnButton.setBorder(new EmptyBorder(10, 20, 10, 20));
+        // Buttons Group
+        ButtonGroup buttonGroup = new ButtonGroup();
 
-        issueButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                navigateTo(createScreen("Issue Book", "Please Enter the ID of the book. \n (You can get ID in 'Book Details' section.)"));
-                handleIssueBook();
+        JButton bButton1 = new JButton("View Member Details");
+        JButton bButton2 = new JButton("View Book Details");
+        JButton bButton3 = new JButton("Add Book");
+        JButton bButton4 = new JButton("Remove Book");
+        JButton bButton5 = new JButton("Change Member Status");
+        JButton bButton6 = new JButton("Add Member");
+        JButton bButton7 = new JButton("Remove Member");
+
+        bButton1.setPreferredSize(new Dimension(200, 50));
+        bButton2.setPreferredSize(new Dimension(200, 50));
+        bButton3.setPreferredSize(new Dimension(200, 50));
+        bButton4.setPreferredSize(new Dimension(200, 50));
+        bButton5.setPreferredSize(new Dimension(200, 50));
+        bButton6.setPreferredSize(new Dimension(200, 50));
+        bButton7.setPreferredSize(new Dimension(200, 50));
+
+        buttonGroup.add(bButton1);
+        buttonGroup.add(bButton2);
+        buttonGroup.add(bButton3);
+        buttonGroup.add(bButton4);
+        buttonGroup.add(bButton5);
+        buttonGroup.add(bButton6);
+        buttonGroup.add(bButton7);
+
+        contentPanel.add(bButton1);
+        contentPanel.add(bButton2);
+        contentPanel.add(bButton3);
+        contentPanel.add(bButton4);
+        contentPanel.add(bButton5);
+        contentPanel.add(bButton6);
+        contentPanel.add(bButton7);
+
+        panel.add(contentPanel, BorderLayout.CENTER);
+        return panel;
+    }
+    static class SelectedButtonUI extends BasicButtonUI {
+        private Color selectedColor;
+
+        public SelectedButtonUI(Color selectedColor) {
+            this.selectedColor = selectedColor;
+        }
+
+        @Override
+        protected void paintButtonPressed(Graphics g, AbstractButton b) {
+            b.getModel().setArmed(true);
+            b.getModel().setPressed(true);
+        }
+
+        @Override
+        protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text) {
+            AbstractButton b = (AbstractButton) c;
+            if (b.getModel().isArmed() || b.getModel().isSelected()) {
+                g.setColor(selectedColor);
+                g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
-        });
-        bookDetailsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                navigateTo(createScreen("Book Details", "Enter the name of the Book or Author's name to get book: "));
-                handleBookDetails();
-            }
-        });
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                navigateTo(createScreen("Return Book", "Please enter the ID of the Book."));
-                handleReturnBook();
-            }
-        });
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
-        buttonPanel.add(issueButton);
-        buttonPanel.add(bookDetailsButton);
-        buttonPanel.add(returnButton);
-
-        screen.add(buttonPanel, BorderLayout.SOUTH);
-
-        return screen;
-    }
-
-    private void navigateTo(JPanel newScreen) {
-        frame.getContentPane().remove(currentScreen);
-
-        currentScreen = newScreen;
-
-        frame.getContentPane().add(currentScreen);
-        frame.revalidate();
-        frame.repaint();
-    }
-
-    private void handleIssueBook() {
-    }
-    private void handleBookDetails() {
-    }
-    private void handleReturnBook() {
+            super.paintText(g, c, textRect, text);
+        }
     }
     public void runGui() {
         System.out.println("Library Management System is running.....");
