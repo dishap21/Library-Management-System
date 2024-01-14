@@ -3,19 +3,19 @@ package myLibrary;
 import java.util.ArrayList;
 
 public class Member {
-    int MemberId, contactNumber;
-    String name, stream;
+    int MemberId, contactNumber, status;
+    String name;
     ArrayList<Book> issuedBooks = new ArrayList<>();
-    public Member(int MemberId, int contactNumber, String name, String stream) {
+    public Member(int MemberId, int contactNumber, String name, int status) {
         this.MemberId = MemberId;
         this.contactNumber = contactNumber;
         this.name = name;
-        this.stream = stream;
+        this.status = status;
     }
     void getMemberDetails(){
         System.out.println("Name: "+this.name+
                 "Contact Number: "+this.contactNumber+
-                "Stream: "+this.stream);
+                "Status: "+this.status);
     }
     void displayIssuedBooks(){
         for(Book book: issuedBooks){
