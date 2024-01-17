@@ -33,5 +33,6 @@ public class LibraryManager {
         // GUI interactions
         LibraryGuiManager guiManager = new LibraryGuiManager(library);
         guiManager.runGui();
+
     }
 }

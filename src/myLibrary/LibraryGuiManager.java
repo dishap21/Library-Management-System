@@ -10,6 +10,9 @@ public class LibraryGuiManager {
     private Library library;
     private static CardLayout cardLayout;
     private static JPanel cardPanel;
+    private static Admin admin = new Admin("admin", "admin123");
+    private static JTextField usernameField;
+    private static JPasswordField passwordField;
     public LibraryGuiManager(Library library) {
         this.library = library;
         initializeGui();
@@ -54,11 +57,11 @@ public class LibraryGuiManager {
             cardPanel = new JPanel(cardLayout);
 
             // Create panels for each "page"
-            JPanel panel1 = createPanel1();
-            JPanel panel2 = createPanel2();
-            JPanel panel3 = createPanel3();
-            JPanel panel4 = createPanel4();
-            JPanel panel5 = createPanel5();
+            JPanel panel1 = HomePanel();
+            JPanel panel2 = BookDetails();
+            JPanel panel3 = IssueBook();
+            JPanel panel4 = ReturnBook();
+            JPanel panel5 = AdminPanel();
 
             // Add panels to the card panel
             cardPanel.add(panel1, "Panel 1");
@@ -86,12 +89,17 @@ public class LibraryGuiManager {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Switch to the specified panel when a button is clicked
-            cardLayout.show(cardPanel, panelName);
+            if (panelName.equals("Panel 5")) {
+                // Handle login logic using a separate method
+                createLoginPanel();
+            } else {
+                // Switch to the specified panel when a button (other than Login) is clicked
+                cardLayout.show(cardPanel, panelName);
+            }
         }
     }
     // Helper method to create a panel with some content
-    private static JPanel createPanel1() {
+    private static JPanel HomePanel() {
         JPanel panel = new JPanel(new BorderLayout());
         // Title
         JLabel titleLabel = new JLabel("Home");
@@ -107,7 +115,7 @@ public class LibraryGuiManager {
 
         return panel;
     }
-    private static JPanel createPanel2() {
+    private static JPanel BookDetails() {
         JPanel panel = new JPanel(new BorderLayout());
         // Title
         JLabel titleLabel = new JLabel("Book Details");
@@ -116,7 +124,7 @@ public class LibraryGuiManager {
         panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
-    private static JPanel createPanel3() {
+    private static JPanel IssueBook() {
         JPanel panel = new JPanel(new BorderLayout());
         // Title
         JLabel titleLabel = new JLabel("Issue Book");
@@ -125,7 +133,7 @@ public class LibraryGuiManager {
         panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
-    private static JPanel createPanel4() {
+    private static JPanel ReturnBook() {
         JPanel panel = new JPanel(new BorderLayout());
         // Title
         JLabel titleLabel = new JLabel("Return Book");
@@ -134,7 +142,7 @@ public class LibraryGuiManager {
         panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
-    private static JPanel createPanel5() {
+    private static JPanel AdminPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         // Title
         JLabel titleLabel = new JLabel("Admin Section");
@@ -183,6 +191,40 @@ public class LibraryGuiManager {
         contentPanel.add(bButton7);
 
         panel.add(contentPanel, BorderLayout.CENTER);
+        return panel;
+    }
+    private static JPanel createLoginPanel() {
+        System.out.println("login part");
+        JPanel panel = new JPanel(new GridLayout(3, 2));
+        usernameField = new JTextField();
+        passwordField = new JPasswordField();
+        JButton loginButton = new JButton("Login");
+
+        panel.add(new JLabel("Username:"));
+        panel.add(usernameField);
+        panel.add(new JLabel("Password:"));
+        panel.add(passwordField);
+        panel.add(new JLabel()); // Empty label for spacing
+        panel.add(loginButton);
+
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String enteredUsername = usernameField.getText();
+                String enteredPassword = new String(passwordField.getPassword());
+                System.out.println("login 2");
+                if (admin.authenticate(enteredUsername, enteredPassword)) {
+                    cardLayout.show(cardPanel, "Panel 5");
+                    System.out.println("login 3");
+                } else {
+                    System.out.println("login 4");
+                    JOptionPane.showMessageDialog(null, "Failed Login", "Login Error", JOptionPane.ERROR_MESSAGE);
+                    cardLayout.show(cardPanel, "Panel 1");
+                }
+            }
+        });
+
+        System.out.println("login 5");
         return panel;
     }
     static class SelectedButtonUI extends BasicButtonUI {
