@@ -1,4 +1,4 @@
-package myLibrary;
+package myLibrary.util;
 
 public class LibraryUtil {
     public static boolean isValidBookId(String bookId) {
