@@ -9,7 +9,9 @@ import java.awt.*;
 public class AdminPanel extends JPanel {
 
     private AdminDAO adminDAO;
-    public AdminPanel(){
+    private LibraryGuiManager libraryGuiManager;
+    public AdminPanel(LibraryGuiManager libraryGuiManager){
+        this.libraryGuiManager = libraryGuiManager;
         adminDAO = new AdminDAO();
         setLayout(new GridLayout(4,1));
         JLabel emailLabel = new JLabel("Enter your Email: ");
@@ -29,8 +31,9 @@ public class AdminPanel extends JPanel {
         b1.addActionListener(e -> {
             String email = textField1.getText();
             String password = new String(textField2.getPassword());
-            if(adminDAO.findAdmin(email, password)){
+            if(adminDAO.validateAdmin(email, password)){
                 ansLabel.setText("Login Successful");
+                libraryGuiManager.SwitchToAdminPanel();
             }else{
                 ansLabel.setText("Login not successful");
             }

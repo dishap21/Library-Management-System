@@ -1,4 +1,4 @@
-package myLibrary;
+package myLibrary.util;
 import java.sql.Connection;
 import myLibrary.util.DatabaseUtil;
 

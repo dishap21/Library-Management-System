@@ -1,6 +1,14 @@
 package myLibrary.GUI;
 
+import myLibrary.GUI.Work.Admin.*;
+import myLibrary.GUI.Work.LibAdminPanel;
+import myLibrary.GUI.Work.LibUserPanel;
+import myLibrary.GUI.Work.User.AllBooks;
+import myLibrary.GUI.Work.User.IssuedBooks;
+import myLibrary.GUI.Work.User.MyDetails;
+import myLibrary.GUI.Work.User.IssueBooks;
 import myLibrary.Library;
+import myLibrary.Member.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +18,7 @@ public class LibraryGuiManager {
     private Library library;
     private static CardLayout cardLayout;
     private static JPanel cardPanel;
+    private static JPanel buttons;
     public LibraryGuiManager(Library library) {
         this.library = library;
         initializeGui();
@@ -31,7 +40,7 @@ public class LibraryGuiManager {
             button3.addActionListener(e -> cardLayout.show(cardPanel, "AdminPanel"));
 
             //Panel for button
-            JPanel buttons = new JPanel();
+            buttons = new JPanel();
             buttons.add(button1);
             buttons.add(button2);
             buttons.add(button3);
@@ -46,14 +55,30 @@ public class LibraryGuiManager {
             cardPanel = new JPanel(cardLayout);
 
             // Add panels to the card panel
-            cardPanel.add(new LoginPanel(), "LoginPanel");
+            cardPanel.add(new LoginPanel(this), "LoginPanel");
             cardPanel.add(new RegisterPanel(), "RegisterPanel");
-            cardPanel.add(new AdminPanel(), "AdminPanel");
+            cardPanel.add(new AdminPanel(this), "AdminPanel");
+            cardPanel.add(new LibUserPanel(this), "UserPanel");
+            cardPanel.add(new LibAdminPanel(this), "AdminPanel2");
+            //user
+            cardPanel.add(new AllBooks(this), "AllBooks");
+            cardPanel.add(new IssuedBooks(this), "IssuedBook");
+            cardPanel.add(new MyDetails(this), "UserDetails");
+            cardPanel.add(new IssueBooks(this), "IssueBook");
+            //admin
+            cardPanel.add(new AllBooks(this), "AllBooks");
+            cardPanel.add(new IssuedBooksA(), "SeeIssuedBook");
+            cardPanel.add(new AllMembers(), "AllMembers");
+            cardPanel.add(new AllAdmins(), "AllAdmins");
+            cardPanel.add(new GetMember(), "GetMemberDetails");
+            cardPanel.add(new AddBooks(), "AddBook");
 
             // Set up the main frame
             frame.setLayout(new BorderLayout());
             frame.add(buttons, BorderLayout.SOUTH);
             frame.add(cardPanel, BorderLayout.CENTER);
+
+
 
             // Set main frame properties
             frame.setSize(700, 400);
@@ -61,6 +86,40 @@ public class LibraryGuiManager {
         });
     }
 
+    public void SwitchToUserPanel(){
+        buttons.setVisible(false);
+        cardLayout.show(cardPanel, "UserPanel");
+    }
+    public void SwitchToAdminPanel(){
+        buttons.setVisible(false);
+        cardLayout.show(cardPanel, "AdminPanel2");
+    }
+
+    public void SwitchToPanel(String panelName) {
+        cardLayout.show(cardPanel, panelName);
+    }
+    private Member currentMember;
+
+    public Member getCurrentMember() {
+        return currentMember;
+    }
+
+    public void setCurrentMember(Member currentMember) {
+        this.currentMember = currentMember;
+    }
+
+    public JPanel HomeLogoutPanel(String redirect){
+        JPanel panel = new JPanel();
+        JButton Home = new JButton("Home");
+        JButton Logout = new JButton("Log out");
+        Home.addActionListener(e -> cardLayout.show(cardPanel, redirect));
+        Logout.addActionListener(e -> {
+            System.exit(0);
+        });
+        panel.add(Home);
+        panel.add(Logout);
+        return panel;
+    }
     static class SelectedButtonUI extends BasicButtonUI {
         private Color selectedColor;
 

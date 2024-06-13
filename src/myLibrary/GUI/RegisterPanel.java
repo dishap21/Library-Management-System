@@ -41,7 +41,7 @@ public class RegisterPanel extends JPanel {
              String phone = textField4.getText();
              try{
                  memberDAO.addMember(new Member(name, email, password, phone));
-                 ansLabel.setText("Registered Successful");
+                 ansLabel.setText("Registered Successful. Go to login page and access the Library.");
              }catch(Exception err){
                  System.out.println(err.getMessage());
                  ansLabel.setText("Login not successful");

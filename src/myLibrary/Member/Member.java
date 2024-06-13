@@ -14,6 +14,13 @@ public class Member {
         this.password = password;
         this.phone = phone;
     }
+    public Member(int id, String name, String email, String password, String phone) {
+        this.member_id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+    }
 
     public int getMember_id() {
         return member_id;
