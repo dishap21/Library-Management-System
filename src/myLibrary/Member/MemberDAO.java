@@ -45,10 +45,10 @@ public class MemberDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int memberId = resultSet.getInt("member_id");
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("m_name");
                 String emailFromDb = resultSet.getString("email");
                 String passwordFromDb = resultSet.getString("password");
-                String phone = resultSet.getString("phone_number");
+                String phone = resultSet.getString("phone");
 
                 return new Member(memberId, name, emailFromDb, passwordFromDb, phone);
             } else {

@@ -10,6 +10,14 @@ public class BorrowedBook {
     private Date returnDate;
     private Date dueDate;
 
+    public BorrowedBook(int bookId, int memberId, java.sql.Date borrowDate, java.sql.Date returnDate, java.sql.Date duedate) {
+        this.bookId = bookId;
+        this.memberId = memberId;
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+        this.dueDate = duedate;
+    }
+
     public int getBorrowId() {
         return borrowId;
     }

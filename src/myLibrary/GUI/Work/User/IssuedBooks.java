@@ -10,7 +10,10 @@ import java.awt.*;
 
 public class IssuedBooks extends JPanel {
     private Member member;
+    private JScrollPane jScrollPane = null;
+    LibraryGuiManager libraryGuiManager;
     public IssuedBooks(LibraryGuiManager libraryGuiManager){
+        this.libraryGuiManager = libraryGuiManager;
         this.member = libraryGuiManager.getCurrentMember();
         setLayout(new BorderLayout());
         JLabel title = new JLabel("All book issued by you.");
@@ -32,10 +35,24 @@ public class IssuedBooks extends JPanel {
     }
 
     private void getAllIssuedBooks() {
+        member = libraryGuiManager.getCurrentMember();
+        if(jScrollPane != null){
+            remove(jScrollPane);
+        }
         if (member != null) {
             BorrowedBookDAO borrowedBookDAO = new BorrowedBookDAO();
             DefaultTableModel model = borrowedBookDAO.getBorrowedBooksByMemberId(member.getMember_id());
-            // You may want to add code to display the model in a table or handle it as needed
+            System.out.println(member.getMember_id());
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No books issued/All books clear.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JTable jTable = new JTable(model);
+                jScrollPane = new JScrollPane(jTable);
+                add(jScrollPane, BorderLayout.CENTER);
+            }
+
+            revalidate();
+            repaint();
         } else {
             JOptionPane.showMessageDialog(this, "No member is currently set.", "Error", JOptionPane.ERROR_MESSAGE);
         }

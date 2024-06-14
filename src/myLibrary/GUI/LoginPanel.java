@@ -31,17 +31,13 @@ public class LoginPanel extends JPanel {
         b1.addActionListener(e -> {
             String email = textField1.getText();
             String password = new String(textField2.getPassword());
-            if(memberDAO.findMember(email, password)  != null){
+            member = memberDAO.findMember(email, password);
+            if(member  != null){
                 ansLabel.setText("Login Successful");
+                libraryGuiManager.setCurrentMember(member);  // Set the current member in LibraryGuiManager
                 libraryGuiManager.SwitchToUserPanel();;
             }else{
                 ansLabel.setText("Login not successful");
-            }
-            member = memberDAO.findMember(email, password);
-            if (member != null) {
-                libraryGuiManager.setCurrentMember(member);  // Set the current member in LibraryGuiManager
-                // Navigate to the main application screen
-            } else {
                 JOptionPane.showMessageDialog(this, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });

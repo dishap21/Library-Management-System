@@ -3,10 +3,7 @@ package myLibrary.GUI;
 import myLibrary.GUI.Work.Admin.*;
 import myLibrary.GUI.Work.LibAdminPanel;
 import myLibrary.GUI.Work.LibUserPanel;
-import myLibrary.GUI.Work.User.AllBooks;
-import myLibrary.GUI.Work.User.IssuedBooks;
-import myLibrary.GUI.Work.User.MyDetails;
-import myLibrary.GUI.Work.User.IssueBooks;
+import myLibrary.GUI.Work.User.*;
 import myLibrary.Library;
 import myLibrary.Member.Member;
 
@@ -78,8 +75,6 @@ public class LibraryGuiManager {
             frame.add(buttons, BorderLayout.SOUTH);
             frame.add(cardPanel, BorderLayout.CENTER);
 
-
-
             // Set main frame properties
             frame.setSize(700, 400);
             frame.setVisible(true);
@@ -100,12 +95,11 @@ public class LibraryGuiManager {
     }
     private Member currentMember;
 
-    public Member getCurrentMember() {
-        return currentMember;
-    }
-
     public void setCurrentMember(Member currentMember) {
         this.currentMember = currentMember;
+    }
+    public Member getCurrentMember() {
+        return currentMember;
     }
 
     public JPanel HomeLogoutPanel(String redirect){

@@ -35,6 +35,6 @@ public class LibUserPanel extends JPanel {
 
         add(buttonPanel, BorderLayout.CENTER);
 
-        add(libraryGuiManager.HomeLogoutPanel("LoginPanel"), BorderLayout.SOUTH);
+        add(libraryGuiManager.HomeLogoutPanel("UserPanel"), BorderLayout.SOUTH);
     }
 }
