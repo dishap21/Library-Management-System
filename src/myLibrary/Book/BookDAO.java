@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BookDAO {
-    public void addBook(Book book){
-        String sql = "INSERT INTO books (title, author, genre, quantity) VALUES (?, ?, ?, ?)";
+    public void addBook(Book book) throws SQLException{
+        String sql = "INSERT INTO book (title, author, genre, quantity) VALUES (?, ?, ?, ?)";
         try(Connection connection = DatabaseUtil.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, book.title);
@@ -18,17 +18,21 @@ public class BookDAO {
             statement.setString(3, book.genre);
             statement.setInt(4, book.quantity);
             statement.executeUpdate();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
         }
     }
-    public void deleteBook(int bookId){
-        String sql = "DELETE FROM Book WHERE book_id="+ bookId;
+    public void deleteBook(int bookId) throws SQLException{
+        Book book = getBookById(bookId);
+        if (book == null) {
+            throw new SQLException("Book ID does not exist: " + bookId);
+        }
+        if (!doesBookIdExist(bookId)) {
+            throw new SQLException("Book ID does not exist: " + bookId);
+        }
+        String sql = "DELETE FROM Book WHERE book_id = ?";
         try(Connection connection = DatabaseUtil.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.executeQuery();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
+            preparedStatement.setInt(1, bookId);
+            preparedStatement.executeUpdate();
         }
     }
     public Book getBookById(int bookId){
@@ -50,7 +54,6 @@ public class BookDAO {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        System.out.println(retBook);
         return retBook;
     }
     public DefaultTableModel getAllBooks(){
@@ -97,4 +100,20 @@ public class BookDAO {
             return false;
         }
     }
+
+    public boolean doesBookIdExist(int bookId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, bookId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
 }

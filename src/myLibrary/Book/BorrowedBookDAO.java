@@ -48,30 +48,32 @@ public class BorrowedBookDAO {
             System.out.println(e.getMessage());
         }
     }
-//    public BorrowedBook getAllBorrowedBooks(){
-//        String sql = "SELECT * FROM BorrowedBooks WHERE borrow_id = ?";
-//        BorrowedBook borrowedBooks = null;
-//
-//        try (Connection conn = DatabaseUtil.getConnection();
-//             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-//            preparedStatement.setInt(1, borrowId);
-//            try (ResultSet rs = preparedStatement.executeQuery()) {
-//                if (rs.next()) {
-//                    borrowedBooks = new BorrowedBook();
-//                    borrowedBooks.setBorrowId(rs.getInt("borrow_id"));
-//                    borrowedBooks.setMemberId(rs.getInt("member_id"));
-//                    borrowedBooks.setBookId(rs.getInt("book_id"));
-//                    borrowedBooks.setBorrowDate(rs.getDate("borrow_date"));
-//                    borrowedBooks.setReturnDate(rs.getDate("return_date"));
-//                    borrowedBooks.setDueDate(rs.getDate("due_date"));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return borrowedBooks;
-//    }
+    public DefaultTableModel getAllBorrowedBooks(){
+        String[] columnNames = {"Borrow Id", "Book Id", "Book Name", "Member Id", "Member Name", "Member Phone Number", "Member Mail"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        String sql = "SELECT BorrowedBooks.borrow_id, Book.book_id, Book.title, BorrowedBooks.member_id, Member.m_name, Member.phone, Member.email " +
+                "FROM BorrowedBooks " +
+                "JOIN Book ON BorrowedBooks.book_id = Book.book_id " +
+                "JOIN Member ON BorrowedBooks.member_id = Member.member_id ";
+        try(Connection connection = DatabaseUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery()){
+            while(resultSet.next()){
+                int borrowId = resultSet.getInt("BorrowedBooks.borrow_id");
+                int bookId = resultSet.getInt("Book.book_id");
+                String bookTitle = resultSet.getString("Book.title");
+                int memberId = resultSet.getInt("BorrowedBooks.member_id");
+                String memberName = resultSet.getString("Member.m_name");
+                String memberPhone = resultSet.getString("Member.phone");
+                String memberMail = resultSet.getString("Member.email");
+                model.addRow(new Object[]{borrowId, bookId, bookTitle, memberId, memberName, memberPhone, memberMail});
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return model;
+    }
     public DefaultTableModel getBorrowedBooksByMemberId(int memberId){
         String[] columns = {"Book id", "Title", "Author", "Issued Date", "Due Date"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);

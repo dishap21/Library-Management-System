@@ -23,6 +23,8 @@ public class LibAdminPanel extends JPanel {
         JButton button4 = new JButton("All Admins");
         JButton button5 = new JButton("Get Member Details");
         JButton button6 = new JButton("Add Book");
+        JButton button7 = new JButton("Returned Books");
+        JButton button8 = new JButton("Delete Book");
 
         buttonPanel.add(button1);
         buttonPanel.add(button2);
@@ -30,13 +32,17 @@ public class LibAdminPanel extends JPanel {
         buttonPanel.add(button4);
         buttonPanel.add(button5);
         buttonPanel.add(button6);
+        buttonPanel.add(button7);
+        buttonPanel.add(button8);
 
-        button1.addActionListener(e -> libraryGuiManager.SwitchToPanel("AllBooks"));
+        button1.addActionListener(e -> libraryGuiManager.SwitchToPanel("AllBooks2"));
         button2.addActionListener(e -> libraryGuiManager.SwitchToPanel("SeeIssuedBook"));
         button3.addActionListener(e -> libraryGuiManager.SwitchToPanel("AllMembers"));
         button4.addActionListener(e -> libraryGuiManager.SwitchToPanel("AllAdmins"));
         button5.addActionListener(e -> libraryGuiManager.SwitchToPanel("GetMemberDetails"));
         button6.addActionListener(e -> libraryGuiManager.SwitchToPanel("AddBook"));
+        button7.addActionListener(e -> libraryGuiManager.SwitchToPanel("ReturnedBooks"));
+        button8.addActionListener(e -> libraryGuiManager.SwitchToPanel("DeleteBook"));
 
         add(buttonPanel, BorderLayout.CENTER);
 

@@ -12,6 +12,12 @@ public class AdminPanel extends JPanel {
     private LibraryGuiManager libraryGuiManager;
     public AdminPanel(LibraryGuiManager libraryGuiManager){
         this.libraryGuiManager = libraryGuiManager;
+        JLabel titleLabel = new JLabel("Admin Login");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        JLabel dummy = new JLabel("");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        add(titleLabel, BorderLayout.NORTH);
+        add(dummy,BorderLayout.NORTH);
         adminDAO = new AdminDAO();
         setLayout(new GridLayout(4,1));
         JLabel emailLabel = new JLabel("Enter your Email: ");

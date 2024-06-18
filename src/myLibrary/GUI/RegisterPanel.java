@@ -10,6 +10,12 @@ import java.sql.SQLException;
 public class RegisterPanel extends JPanel {
     private MemberDAO memberDAO;
      public RegisterPanel(){
+         JLabel titleLabel = new JLabel("Member Register");
+         titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+         JLabel dummy = new JLabel("");
+         titleLabel.setFont(new Font("Arial", Font.BOLD, 25));
+         add(titleLabel, BorderLayout.NORTH);
+         add(dummy,BorderLayout.NORTH);
          memberDAO = new MemberDAO();
          setLayout(new GridLayout(6,1));
          JLabel nameLabel = new JLabel("Enter your Username: ");

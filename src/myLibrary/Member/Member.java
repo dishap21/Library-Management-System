@@ -22,6 +22,13 @@ public class Member {
         this.phone = phone;
     }
 
+    public Member(int memberId, String mName, String email, String phone) {
+        this.member_id = memberId;
+        this.name = mName;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public int getMember_id() {
         return member_id;
     }

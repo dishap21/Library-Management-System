@@ -63,12 +63,14 @@ public class LibraryGuiManager {
             cardPanel.add(new MyDetails(this), "UserDetails");
             cardPanel.add(new IssueBooks(this), "IssueBook");
             //admin
-            cardPanel.add(new AllBooks(this), "AllBooks");
-            cardPanel.add(new IssuedBooksA(), "SeeIssuedBook");
-            cardPanel.add(new AllMembers(), "AllMembers");
-            cardPanel.add(new AllAdmins(), "AllAdmins");
-            cardPanel.add(new GetMember(), "GetMemberDetails");
-            cardPanel.add(new AddBooks(), "AddBook");
+            cardPanel.add(new AllBooks2(this), "AllBooks2");
+            cardPanel.add(new IssuedBooksA(this), "SeeIssuedBook");
+            cardPanel.add(new AllMembers(this), "AllMembers");
+            cardPanel.add(new AllAdmins(this), "AllAdmins");
+            cardPanel.add(new GetMember(this), "GetMemberDetails");
+            cardPanel.add(new AddBooks(this), "AddBook");
+            cardPanel.add(new ReturnedBooks(this), "ReturnedBooks");
+            cardPanel.add(new DeleteBook(this), "DeleteBook");
 
             // Set up the main frame
             frame.setLayout(new BorderLayout());

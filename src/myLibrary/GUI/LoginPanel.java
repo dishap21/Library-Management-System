@@ -12,8 +12,13 @@ public class LoginPanel extends JPanel {
     private Member member;
     public LoginPanel(LibraryGuiManager libraryGuiManager){
         this.libraryGuiManager = libraryGuiManager;
+        JLabel titleLabel = new JLabel("Member Login");
+        JLabel dummy = new JLabel("");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        add(titleLabel, BorderLayout.NORTH);
+        add(dummy, BorderLayout.NORTH);
         memberDAO = new MemberDAO();
-        setLayout(new GridLayout(4,1));
+        setLayout(new GridLayout(5,1));
         JLabel emailLabel = new JLabel("Enter your Email: ");
         JTextField textField1 = new JTextField();
         JLabel passLabel = new JLabel("Enter your Password: ");
